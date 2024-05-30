@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import { useState, useEffect } from 'react';
 import api from './api/axiosConfig';
 import { Route, Routes } from 'react-router-dom';

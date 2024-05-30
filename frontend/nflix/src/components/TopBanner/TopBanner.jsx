@@ -11,7 +11,7 @@ const TopBanner = ({movies}) => {
                     return (
                         <Paper key={movie.id}>
                             <div className='card-container'>
-                                <div className='movie-card'>
+                                <div className='movie-card' style={{"--img": `url(${movie.backDrops[0]})`}}>
                                     <div className='movie-detail'>
                                         <div className='movie-poster'>
                                             <img src={movie.posterLink} alt=''/>
