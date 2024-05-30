@@ -1,8 +1,9 @@
 import React from 'react'
+import TopBanner from '../TopBanner/TopBanner'
 
-const Home = () => {
+const Home = ({movies}) => {
   return (
-    <div>Home</div>
+    <TopBanner movies={movies} />
   )
 }
 
