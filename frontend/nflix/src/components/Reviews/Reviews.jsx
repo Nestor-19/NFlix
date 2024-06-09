@@ -1,38 +1,26 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import api from '../../api/axiosConfig';
 import {useParams} from 'react-router-dom';
 import {Container, Row, Col} from 'react-bootstrap';
 import ReviewForm from '../ReviewForm/ReviewForm';
+import useMovie from '../../hooks/useMovie';
 
-
-const Reviews = ({getMovie, movie, reviews, setReviews}) => {
-
+const Reviews = () => {
     const revText = useRef();
-    let params = useParams();
-    const movieId = params.movieId;
+    const { movieId } = useParams();
+    const { movie, reviews, setReviews } = useMovie(movieId);
 
-    useEffect(()=>{
-        getMovie(movieId);
-    },[])
-
-    const addReview = async (e) =>{
+    const addReview = async (e) => {
         e.preventDefault();
-
         const rev = revText.current;
-
-        try
-        {
-            const response = await api.post("/api/v1/reviews",{reviewBody:rev.value,imdbId:movieId});
-
-            const updatedReviews = [...reviews, {body:rev.value}];
-    
+        try {
+            const response = await api.post("/api/v1/reviews", {reviewBody: rev.value, imdbId: movieId});
+            const updatedReviews = [...reviews, {body: rev.value}];
             rev.value = "";
     
             setReviews(updatedReviews);
-        }
-        catch(err)
-        {
-            console.error(err);
+        } catch(error) {
+            console.error(error);
         }
     }
 
@@ -61,9 +49,9 @@ const Reviews = ({getMovie, movie, reviews, setReviews}) => {
                     </>
                 }
                 {
-                    reviews?.map((review) => {
+                    reviews?.map((review, index) => {
                         return(
-                            <>
+                            <div key={index}>
                                 <Row>
                                     <Col>{review.body}</Col>
                                 </Row>
@@ -72,7 +60,7 @@ const Reviews = ({getMovie, movie, reviews, setReviews}) => {
                                         <hr />
                                     </Col>
                                 </Row>                                
-                            </>
+                            </div>
                         )
                     })
                 }
