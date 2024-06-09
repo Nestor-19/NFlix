@@ -1,0 +1,46 @@
+.not-found {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #343a40;
+    text-align: center;
+    color: #343a40;
+  
+    &__content {
+      max-width: 600px;
+      padding: 40px;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  
+    &__title {
+      font-size: 6rem;
+      margin: 0;
+      color: #343a40;
+    }
+  
+    &__message {
+      font-size: 1.5rem;
+      margin: 20px 0;
+      color: #6c757d;
+    }
+  
+    &__link {
+      font-size: 1.25rem;
+      color: #343a40;
+      text-decoration: none;
+      border: 1px solid #343a40;
+      padding: 10px 20px;
+      border-radius: 4px;
+      transition: background-color 0.3s, color 0.3s;
+  
+      &:hover {
+        background-color: #343a40;
+        color: #fff;
+      }
+    }
+  }
+  

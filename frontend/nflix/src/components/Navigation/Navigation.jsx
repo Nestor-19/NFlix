@@ -1,4 +1,3 @@
-import './Navigation.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilm } from '@fortawesome/free-solid-svg-icons';
 import Button  from 'react-bootstrap/Button';

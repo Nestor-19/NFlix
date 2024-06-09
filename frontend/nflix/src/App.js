@@ -6,6 +6,7 @@ import Home from './components/Home/Home';
 import Trailer from './components/Trailer/Trailer';
 import Reviews from './components/Reviews/Reviews';
 import useMovies from './hooks/useMovies';
+import NotFound from './components/NotFound/NotFound';
 
 function App() {
   const movies = useMovies();
@@ -18,6 +19,7 @@ function App() {
           <Route path='/' element={<Home movies={movies}/>}/>
           <Route path='/trailer/:trailerId' element={<Trailer />}/>
           <Route path="/reviews/:movieId" element ={<Reviews />}/>
+          <Route path="*" element={<NotFound />}/>
         </Route>
       </Routes>
     </div>
