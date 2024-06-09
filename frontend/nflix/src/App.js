@@ -7,24 +7,12 @@ import Layout from './components/Layout/Layout';
 import Home from './components/Home/Home';
 import Trailer from './components/Trailer/Trailer';
 import Reviews from './components/Reviews/Reviews';
+import useMovies from './hooks/useMovies';
 
 function App() {
   const [movie, setMovie] = useState();
-  const [movies, setMovies] = useState([]);
   const [reviews, setReviews] = useState([]);
-
-  const getAllMovies = async () => {
-    try {
-      const response = await api.get("/api/v1/movies");
-      if (response.status === 200) {
-        setMovies(response.data);
-      } else {
-        console.log('Unexpected status code:', response.status);
-      }
-    } catch(error) {
-      console.log('Fetch to get movies failed with error: ' + error);
-    }
-  }
+  const movies = useMovies();
 
   const getMovie = async (movieId) => {
     try 
@@ -40,10 +28,6 @@ function App() {
     }
 
   }
-
-  useEffect(() => {
-    getAllMovies();
-  }, [])
 
   return (
     <div className="App">
