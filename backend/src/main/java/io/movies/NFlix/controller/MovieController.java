@@ -1,6 +1,7 @@
-package io.movies.NFlix;
+package io.movies.NFlix.controller;
 
-import org.bson.types.ObjectId;
+import io.movies.NFlix.service.MovieService;
+import io.movies.NFlix.entity.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,5 +1,7 @@
-package io.movies.NFlix;
+package io.movies.NFlix.controller;
 
+import io.movies.NFlix.service.ReviewService;
+import io.movies.NFlix.entity.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

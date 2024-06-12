@@ -1,4 +1,4 @@
-package io.movies.NFlix;
+package io.movies.NFlix.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

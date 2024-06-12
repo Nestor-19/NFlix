@@ -1,5 +1,8 @@
-package io.movies.NFlix;
+package io.movies.NFlix.service;
 
+import io.movies.NFlix.entity.Movie;
+import io.movies.NFlix.entity.Review;
+import io.movies.NFlix.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;

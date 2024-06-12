@@ -1,6 +1,7 @@
-package io.movies.NFlix;
+package io.movies.NFlix.service;
 
-import org.bson.types.ObjectId;
+import io.movies.NFlix.entity.Movie;
+import io.movies.NFlix.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
