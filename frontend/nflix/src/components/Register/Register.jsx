@@ -11,8 +11,10 @@ const RegisterPage = () => {
     confirmPassword: '',
   });
 
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+
   const handleChange = (e) => {
-    console.log(e.target)
     const { name, value } = e.target;
     setForm({
       ...form,
@@ -22,11 +24,21 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted', form);
+    setErrorMessage('');
+    setSuccessMessage('');
     try {
         const response = await api.post('/api/v1/auth/register', { username: form.username, password: form.password});
+        if (response.status === 201) {
+          setSuccessMessage('User registered successfully.');
+          setForm({
+            username: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+          });
+        }
     } catch(error) {
-        console.error(error);
+      setErrorMessage(error.response.data.message || 'An error occurred. Please try again.');
     }
   };
 
@@ -34,6 +46,8 @@ const RegisterPage = () => {
     <div className="register-page">
       <form className="register-form" onSubmit={handleSubmit}>
         <h2>Register</h2>
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
+        {successMessage && <div className="success-message">{successMessage}</div>} 
         <label>
           Username
           <input
