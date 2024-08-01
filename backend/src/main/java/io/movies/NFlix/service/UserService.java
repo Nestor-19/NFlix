@@ -54,6 +54,7 @@ public class UserService{
             Response response = Response.builder()
                     .message("Login successful")
                     .isSuccessful(true)
+                    .user(fetchedUser)
                     .jwtToken(jwtToken)
                     .build();
 
