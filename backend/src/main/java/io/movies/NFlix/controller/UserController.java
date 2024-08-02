@@ -1,5 +1,6 @@
 package io.movies.NFlix.controller;
 
+import io.movies.NFlix.dto.JwtRequestDto;
 import io.movies.NFlix.entity.User;
 import io.movies.NFlix.response.Response;
 import io.movies.NFlix.service.UserService;
@@ -25,5 +26,10 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<Response> loginUser(@RequestBody User user) {
         return userService.loginUser(user);
+    }
+
+    @PostMapping("/verifyJWT")
+    public ResponseEntity<Response> verifyJwt(@RequestBody JwtRequestDto jwtRequestDto) {
+        return userService.verifyJwt(jwtRequestDto.getJwtToken());
     }
 }

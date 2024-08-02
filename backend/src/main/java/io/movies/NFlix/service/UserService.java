@@ -1,5 +1,6 @@
 package io.movies.NFlix.service;
 
+import io.jsonwebtoken.Claims;
 import io.movies.NFlix.entity.User;
 import io.movies.NFlix.repository.UserRepository;
 import io.movies.NFlix.response.Response;
@@ -66,5 +67,35 @@ public class UserService{
                 .build();
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+    }
+
+    public ResponseEntity<Response> verifyJwt(String jwtToken) {
+        if (jwtUtil.validateToken(jwtToken)) {
+            Claims claims = jwtUtil.extractClaims(jwtToken);
+            String username = claims.getSubject();
+            User user = userRepo.findByUsername(username);
+            if (user != null) {
+                Response response = Response.builder()
+                        .message("JWT token valid")
+                        .isSuccessful(true)
+                        .build();
+
+                return ResponseEntity.ok(response);
+            } else {
+                Response response = Response.builder()
+                        .message("User not found")
+                        .isSuccessful(false)
+                        .build();
+
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+        } else {
+            Response response = Response.builder()
+                    .message("JWT token invalid or expired")
+                    .isSuccessful(false)
+                    .build();
+
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+        }
     }
 }
