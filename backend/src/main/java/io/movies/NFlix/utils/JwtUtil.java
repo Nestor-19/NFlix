@@ -40,4 +40,8 @@ public class JwtUtil {
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
     }
 
+    public String refreshToken(String token) {
+        Claims claims = extractClaims(token);
+        return generateToken(claims.getSubject());
+    }
 }

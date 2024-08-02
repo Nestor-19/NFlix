@@ -32,4 +32,9 @@ public class UserController {
     public ResponseEntity<Response> verifyJwt(@RequestBody JwtRequestDto jwtRequestDto) {
         return userService.verifyJwt(jwtRequestDto.getJwtToken());
     }
+
+    @PostMapping("/refreshJWT")
+    public ResponseEntity<Response> refreshJwt(@RequestBody JwtRequestDto jwtRequestDto) {
+        return userService.refreshJwt(jwtRequestDto.getJwtToken());
+    }
 }

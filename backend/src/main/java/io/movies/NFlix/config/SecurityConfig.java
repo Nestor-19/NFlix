@@ -20,6 +20,7 @@ public class SecurityConfig {
                         "/api/v1/auth/register",
                                 "/api/v1/auth/login",
                                 "api/v1/auth/verifyJWT",
+                                "api/v1/auth/refreshJWT",
                                 "/api/v1/movies/**",
                                 "/api/v1/reviews",
                                 "/error").permitAll()

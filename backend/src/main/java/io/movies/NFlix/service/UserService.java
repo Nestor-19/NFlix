@@ -98,4 +98,24 @@ public class UserService{
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
     }
+
+    public ResponseEntity<Response> refreshJwt(String oldJwtToken) {
+        if (jwtUtil.validateToken(oldJwtToken)) {
+            String newJwtToken = jwtUtil.refreshToken(oldJwtToken);
+            Response response = Response.builder()
+                    .message("JWT token valid")
+                    .jwtToken(newJwtToken)
+                    .isSuccessful(true)
+                    .build();
+
+            return ResponseEntity.ok(response);
+        } else {
+            Response response = Response.builder()
+                    .message("JWT token invalid or expired")
+                    .isSuccessful(false)
+                    .build();
+
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+        }
+    }
 }
