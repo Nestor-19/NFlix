@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './Login.scss';
 import api from '../../api/axiosConfig';
+import { UserContext } from '../../context/UserContext';
 
 const LoginPage = () => {
   const [form, setForm] = useState({
     username: '',
-    password: '',
+    password: '',   
   });
 
-  const [currentUser, setCurrentUser] = useState(null);
+  const { login } = useContext(UserContext);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
@@ -29,7 +30,7 @@ const LoginPage = () => {
         console.log(response);
         if (response.status === 200) {
           const user = response.data.user;
-          setCurrentUser(user);
+          login(user);
           setSuccessMessage('User logged in successfully.');
           setForm({
             username: '',

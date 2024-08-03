@@ -1,5 +1,6 @@
 import './App.scss';
 import { Route, Routes } from 'react-router-dom';
+import { UserProvider } from './context/UserContext';
 import Navigation from './components/Navigation/Navigation';
 import Layout from './components/Layout/Layout';
 import Home from './components/Home/Home';
@@ -15,6 +16,7 @@ function App() {
 
   return (
     <div className="App">
+      <UserProvider>
       <Navigation />
       <Routes>
         <Route path='/' element={<Layout />}>
@@ -26,6 +28,7 @@ function App() {
           <Route path="*" element={<NotFound />}/>
         </Route>
       </Routes>
+      </UserProvider>
     </div>
   );
 }

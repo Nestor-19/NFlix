@@ -1,7 +1,8 @@
 
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './Register.scss';
 import api from '../../api/axiosConfig';
+import { UserContext } from '../../context/UserContext';
 
 const RegisterPage = () => {
   const [form, setForm] = useState({
@@ -11,6 +12,8 @@ const RegisterPage = () => {
     confirmPassword: '',
   });
 
+  const { currentUser } = useContext(UserContext);
+  console.log(currentUser);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
