@@ -1,14 +1,16 @@
-import { useRef } from 'react';
+import { useContext, useRef } from 'react';
 import api from '../../api/axiosConfig';
 import {useParams} from 'react-router-dom';
 import {Container, Row, Col} from 'react-bootstrap';
 import ReviewForm from '../ReviewForm/ReviewForm';
 import useMovie from '../../hooks/useMovie';
+import { UserContext } from '../../context/UserContext';
 
 const Reviews = () => {
     const revText = useRef();
     const { movieId } = useParams();
     const { movie, reviews, setReviews } = useMovie(movieId);
+    const { currentUser } = useContext(UserContext);
 
     const addReview = async (e) => {
         e.preventDefault();
@@ -38,7 +40,13 @@ const Reviews = () => {
                     <>
                         <Row>
                             <Col>
-                                <ReviewForm handleSubmit={addReview} revText={revText} labelText = "Write a Review?" />  
+                                {currentUser ? (
+                                    <ReviewForm
+                                        handleSubmit={addReview}
+                                        revText={revText}
+                                        labelText="Write a Review?"
+                                    />
+                                ) : null}
                             </Col>
                         </Row>
                         <Row>

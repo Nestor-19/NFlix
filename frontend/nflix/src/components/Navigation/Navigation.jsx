@@ -45,7 +45,6 @@ const Navigation = () => {
                         <Button variant="outline-info" className="me-2" onClick={() => login()}>Login</Button>
                         <Button variant="outline-info" onClick={() => register()}>Register</Button>
                       </div>
-                      // <Button variant="outline-info" className="me-2" onClick={() => login()}>Login</Button>
                 }
             </Navbar.Collapse>
         </Container>
