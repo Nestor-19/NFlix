@@ -5,16 +5,23 @@ import Container  from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { UserContext } from '../../context/UserContext';
 
 const Navigation = () => {
   const navigate = useNavigate();
+  const currentUser = useContext(UserContext);
 
   const register = () => {
     navigate('/register');
   }
 
   const login = () => {
-    navigate('/login')
+    navigate('/login');
+  }
+  
+  const logOut = () => {
+    console.log("user is trying to logout!");
   }
 
   return (
@@ -33,8 +40,14 @@ const Navigation = () => {
                     <NavLink className ="nav-link" to="/">Home</NavLink>
                     <NavLink className ="nav-link" to="/watchList">Watch List</NavLink>      
                 </Nav>
-                <Button variant="outline-info" className="me-2" onClick={() => login()}>Login</Button>
-                <Button variant="outline-info" onClick={() => register()}>Register</Button>
+                {currentUser ?  
+                      <Button variant="outline-info" className="me-2" onClick={() => logOut()}>Log Out</Button>
+                      : 
+                      <div>
+                        <Button variant="outline-info" className="me-2" onClick={() => login()}>Login</Button>
+                        <Button variant="outline-info" onClick={() => register()}>Register</Button>
+                      </div>
+                }
             </Navbar.Collapse>
         </Container>
     </Navbar>
