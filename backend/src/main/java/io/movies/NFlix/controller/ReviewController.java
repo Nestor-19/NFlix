@@ -1,7 +1,7 @@
 package io.movies.NFlix.controller;
 
-import io.movies.NFlix.service.ReviewService;
 import io.movies.NFlix.entity.Review;
+import io.movies.NFlix.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,14 @@ public class ReviewController {
 
     @PostMapping
     public ResponseEntity<Review> createReview(@RequestBody Map<String, String> payload) {
-        return new ResponseEntity<Review>(reviewService.createReview(payload.get("reviewBody"), payload.get("imdbId")), HttpStatus.CREATED);
+        return new ResponseEntity<Review>(
+                reviewService.createReview(
+                        payload.get("reviewBody"),
+                        payload.get("imdbId"),
+                        payload.get("username")
+                ),
+                HttpStatus.CREATED
+        );
     }
 
 }
