@@ -4,6 +4,7 @@ import Button  from 'react-bootstrap/Button';
 import Container  from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import Logout from '../Logout/Logout';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
@@ -18,10 +19,6 @@ const Navigation = () => {
 
   const login = () => {
     navigate('/login');
-  }
-  
-  const logOut = () => {
-    console.log("user is trying to logout!");
   }
 
   return (
@@ -41,7 +38,7 @@ const Navigation = () => {
                     <NavLink className ="nav-link" to="/watchList">Watch List</NavLink>      
                 </Nav>
                 {currentUser ?  
-                      <Button variant="outline-info" className="me-2" onClick={() => logOut()}>Log Out</Button>
+                      <Logout />
                       : 
                       <div>
                         <Button variant="outline-info" className="me-2" onClick={() => login()}>Login</Button>
