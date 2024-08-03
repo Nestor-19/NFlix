@@ -1,13 +1,17 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Button  from 'react-bootstrap/Button';
+import { UserContext } from '../../context/UserContext';
 
 const Logout = () => {
-    const logOut = () => {
-        console.log("user is trying to logout!");
+    const { logout } = useContext(UserContext);
+
+    const handleLogOut = () => {
+        console.log("User is trying to logout!");
+        logout();
     }
 
     return (
-        <Button variant="outline-info" className="me-2" onClick={() => logOut()}>Log Out</Button>
+        <Button variant="outline-info" className="me-2" onClick={() => handleLogOut()}>Log Out</Button>
     )
 }
 

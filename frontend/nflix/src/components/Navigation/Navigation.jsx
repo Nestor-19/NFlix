@@ -11,7 +11,8 @@ import { UserContext } from '../../context/UserContext';
 
 const Navigation = () => {
   const navigate = useNavigate();
-  const currentUser = useContext(UserContext);
+  const {currentUser} = useContext(UserContext);
+  console.log(currentUser);
 
   const register = () => {
     navigate('/register');
@@ -44,6 +45,7 @@ const Navigation = () => {
                         <Button variant="outline-info" className="me-2" onClick={() => login()}>Login</Button>
                         <Button variant="outline-info" onClick={() => register()}>Register</Button>
                       </div>
+                      // <Button variant="outline-info" className="me-2" onClick={() => login()}>Login</Button>
                 }
             </Navbar.Collapse>
         </Container>
