@@ -1,4 +1,5 @@
 import { useContext, useRef } from 'react';
+import './Reviews.scss'
 import api from '../../api/axiosConfig';
 import {useParams} from 'react-router-dom';
 import {Container, Row, Col} from 'react-bootstrap';
@@ -34,7 +35,7 @@ const Reviews = () => {
         </Row>
         <Row className="mt-2">
             <Col>
-                <img src={movie?.posterLink} alt="" />
+                <img src={movie?.posterLink} alt="" className="poster"/>
             </Col>
             <Col>
                 {
@@ -60,9 +61,10 @@ const Reviews = () => {
                 {
                     reviews?.map((review, index) => {
                         return(
-                            <div key={index}>
+                            <div key={index} className="review-item">
                                 <Row>
-                                    <Col>{review.body}</Col>
+                                    <Col md={10} className="review-body">{review.body}</Col>
+                                    <Col md={2} className="review-username text-end">{review.user.username}</Col>
                                 </Row>
                                 <Row>
                                     <Col>
