@@ -1,7 +1,9 @@
 package io.movies.NFlix.service;
 
 import io.jsonwebtoken.Claims;
+import io.movies.NFlix.entity.Movie;
 import io.movies.NFlix.entity.User;
+import io.movies.NFlix.repository.MovieRepository;
 import io.movies.NFlix.repository.UserRepository;
 import io.movies.NFlix.response.Response;
 import io.movies.NFlix.utils.JwtUtil;
@@ -15,6 +17,8 @@ import org.springframework.stereotype.Service;
 public class UserService{
     @Autowired
     private UserRepository userRepo;
+    @Autowired
+    private MovieRepository movieRepo;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -55,7 +59,7 @@ public class UserService{
             Response response = Response.builder()
                     .message("Login successful")
                     .isSuccessful(true)
-                    .user(fetchedUser)
+                    .user(fetchedUser.getUsername())
                     .jwtToken(jwtToken)
                     .build();
 
@@ -117,5 +121,42 @@ public class UserService{
 
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
+    }
+
+    public ResponseEntity<Response> addMovieToWatchList(String username, String jwtToken, String movieId) {
+        User user = userRepo.findByUsername(username);
+        if (user == null) {
+            Response response = Response.builder()
+                    .message("User not found")
+                    .isSuccessful(false)
+                    .build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+
+        if (!jwtUtil.validateToken(jwtToken)) {
+            Response response = Response.builder()
+                    .message("JWT token invalid or expired")
+                    .isSuccessful(false)
+                    .build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+        }
+
+        Movie movie = movieRepo.findByImdbId(movieId).orElse(null);
+        if (movie == null) {
+            Response response = Response.builder()
+                    .message("Movie not found")
+                    .isSuccessful(false)
+                    .build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+
+        user.getWatchList().add(movie);
+        userRepo.save(user);
+
+        Response response = Response.builder()
+                .message("Movie added to watchlist")
+                .isSuccessful(true)
+                .build();
+        return ResponseEntity.ok(response);
     }
 }

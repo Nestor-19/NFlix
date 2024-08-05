@@ -19,10 +19,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth-> auth.requestMatchers(
                         "/api/v1/auth/register",
                                 "/api/v1/auth/login",
-                                "api/v1/auth/verifyJWT",
-                                "api/v1/auth/refreshJWT",
+                                "/api/v1/auth/verifyJWT",
+                                "/api/v1/auth/refreshJWT",
                                 "/api/v1/movies/**",
                                 "/api/v1/reviews",
+                                "/api/v1/auth/{username}/watchList",
                                 "/error").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
