@@ -5,8 +5,8 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Document(collection = "users")
@@ -18,6 +18,5 @@ public class User {
     @Indexed
     private String username;
     private String password;
-    @DocumentReference
-    private List<Movie> watchList;
+    private List<String> watchList = new ArrayList<>();
 }
