@@ -30,6 +30,8 @@ const LoginPage = () => {
         console.log(response);
         if (response.status === 200) {
           const user = response.data.user;
+          const { jwtToken } = response.data;
+          localStorage.setItem('jwtToken', jwtToken);
           login(user);
           setSuccessMessage('User logged in successfully.');
           setForm({

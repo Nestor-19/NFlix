@@ -10,6 +10,7 @@ import useMovies from './hooks/useMovies';
 import Register from './components/Register/Register';
 import Login from './components/Login/Login';
 import NotFound from './components/NotFound/NotFound';
+import WatchList from './components/WatchList/WatchList';
 
 function App() {
   const movies = useMovies();
@@ -19,10 +20,11 @@ function App() {
       <UserProvider>
       <Navigation />
       <Routes>
-        <Route path='/' element={<Layout />}>
-          <Route path='/' element={<Home movies={movies}/>}/>
-          <Route path='/trailer/:trailerId' element={<Trailer />}/>
+        <Route path="/" element={<Layout />}>
+          <Route path="/" element={<Home movies={movies}/>}/>
+          <Route path="/trailer/:trailerId" element={<Trailer />}/>
           <Route path="/reviews/:movieId" element={<Reviews />}/>
+          <Route path="/watchList" element={<WatchList />}/>
           <Route path="/register" element={<Register />}/>
           <Route path="/login" element={<Login />}/>
           <Route path="*" element={<NotFound />}/>

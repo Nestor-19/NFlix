@@ -1,0 +1,37 @@
+.watchlist-container {
+    padding: 20px;
+}
+
+.wl-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    height: 10px;
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    
+    &:hover {
+        transform: scale(1.05);
+    }
+}
+
+.wl-image {
+    width: 100%;
+    height: auto;
+}
+
+.title {
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    justify-content: center;
+}
