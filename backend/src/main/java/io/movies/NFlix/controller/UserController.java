@@ -45,7 +45,7 @@ public class UserController {
     }
 
     @GetMapping("/watchList")
-    public ResponseEntity<Response> getUserWatchList(@RequestBody JwtRequestDto jwtRequestDto) {
-        return userService.getUserWatchList(jwtRequestDto.getJwtToken());
+    public ResponseEntity<Response> getUserWatchList(@RequestParam String jwtToken) {
+        return userService.getUserWatchList(jwtToken);
     }
 }
