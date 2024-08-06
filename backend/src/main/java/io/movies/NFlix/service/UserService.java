@@ -69,16 +69,7 @@ public class UserService{
         return ResponseUtil.createResponse("JWT token invalid or expired", false, HttpStatus.UNAUTHORIZED);
     }
 
-    public ResponseEntity<Response> addMovieToWatchList(String username, String jwtToken, String movieId) {
-        User user = userRepo.findByUsername(username);
-        if (user == null) {
-            Response response = Response.builder()
-                    .message("User not found")
-                    .isSuccessful(false)
-                    .build();
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        }
-
+    public ResponseEntity<Response> addMovieToWatchList(String jwtToken, String movieId) {
         if (!jwtUtil.validateToken(jwtToken)) {
             Response response = Response.builder()
                     .message("JWT token invalid or expired")
@@ -86,6 +77,10 @@ public class UserService{
                     .build();
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
+
+        Claims claims = jwtUtil.extractClaims(jwtToken);
+        String username = claims.getSubject();
+        User user = userRepo.findByUsername(username);
 
         Movie movie = movieRepo.findByImdbId(movieId).orElse(null);
         if (movie == null) {

@@ -1,6 +1,5 @@
 package io.movies.NFlix.controller;
 
-import io.movies.NFlix.dto.GenericRequestDto;
 import io.movies.NFlix.dto.JwtRequestDto;
 import io.movies.NFlix.entity.User;
 import io.movies.NFlix.response.Response;
@@ -39,11 +38,10 @@ public class UserController {
         return userService.refreshJwt(jwtRequestDto.getJwtToken());
     }
 
-    @PostMapping("/{username}/watchList")
-    public ResponseEntity<Response> addMovieToWatchList(@PathVariable String username, @RequestBody GenericRequestDto requestDto) {
-        String jwtToken = requestDto.getJwtToken();
-        String movieId = requestDto.getData().get("movieId");
-        return userService.addMovieToWatchList(username, jwtToken, movieId);
+    @PostMapping("/watchList/{movieId}")
+    public ResponseEntity<Response> addMovieToWatchList(@PathVariable String movieId, @RequestBody JwtRequestDto jwtRequestDto) {
+        String jwtToken = jwtRequestDto.getJwtToken();
+        return userService.addMovieToWatchList(jwtToken, movieId);
     }
 
     @GetMapping("/{username}/watchList")

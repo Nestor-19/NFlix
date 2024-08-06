@@ -23,7 +23,7 @@ public class SecurityConfig {
                                 "/api/v1/auth/refreshJWT",
                                 "/api/v1/movies/**",
                                 "/api/v1/reviews",
-                                "/api/v1/auth/{username}/watchList",
+                                "/api/v1/auth/watchList/**",
                                 "/error").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
