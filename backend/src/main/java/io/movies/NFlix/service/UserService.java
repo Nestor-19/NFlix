@@ -16,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 @Service
 public class UserService{
@@ -35,7 +34,7 @@ public class UserService{
             }
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setWatchList(new ArrayList<>());
-            User createdUser = userRepo.save(user);
+            userRepo.save(user);
 
             return ResponseUtil.createResponse("User registered successfully", true, HttpStatus.CREATED);
     }
@@ -91,26 +90,17 @@ public class UserService{
         return ResponseUtil.createResponse("Movie added to watchlist", true, HttpStatus.OK);
     }
 
-    public ResponseEntity<Response> getUserWatchList(String username, String jwtToken) {
-        User user = userRepo.findByUsername(username);
-        if (user == null) {
-            Response response = Response.builder()
-                    .message("User not found")
-                    .isSuccessful(false)
-                    .build();
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        }
+    public ResponseEntity<Response> getUserWatchList(String jwtToken) {
+        Pair<User, ResponseEntity<Response>> validationResult = validateUserAndToken(jwtToken);
+        User user = validationResult.getLeft();
+        ResponseEntity<Response> errorResponse = validationResult.getRight();
 
-        if (!jwtUtil.validateToken(jwtToken)) {
-            Response response = Response.builder()
-                    .message("JWT token invalid or expired")
-                    .isSuccessful(false)
-                    .build();
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+        if (errorResponse != null) {
+            return errorResponse;
         }
 
         Response response = Response.builder()
-                .message("Fetched watchList for " + username)
+                .message("Fetched watchList for " + user.getUsername())
                 .user(user)
                 .isSuccessful(true)
                 .build();
