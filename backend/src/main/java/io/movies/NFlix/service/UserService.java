@@ -8,6 +8,7 @@ import io.movies.NFlix.repository.UserRepository;
 import io.movies.NFlix.response.Response;
 import io.movies.NFlix.response.ResponseUtil;
 import io.movies.NFlix.utils.JwtUtil;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 public class UserService{
@@ -70,35 +72,23 @@ public class UserService{
     }
 
     public ResponseEntity<Response> addMovieToWatchList(String jwtToken, String movieId) {
-        if (!jwtUtil.validateToken(jwtToken)) {
-            Response response = Response.builder()
-                    .message("JWT token invalid or expired")
-                    .isSuccessful(false)
-                    .build();
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-        }
+        Pair<User, ResponseEntity<Response>> validationResult = validateUserAndToken(jwtToken);
+        User user = validationResult.getLeft();
+        ResponseEntity<Response> errorResponse = validationResult.getRight();
 
-        Claims claims = jwtUtil.extractClaims(jwtToken);
-        String username = claims.getSubject();
-        User user = userRepo.findByUsername(username);
+        if (errorResponse != null) {
+            return errorResponse;
+        }
 
         Movie movie = movieRepo.findByImdbId(movieId).orElse(null);
         if (movie == null) {
-            Response response = Response.builder()
-                    .message("Movie not found")
-                    .isSuccessful(false)
-                    .build();
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            return ResponseUtil.createResponse("Movie not found", false, HttpStatus.NOT_FOUND);
         }
 
         user.getWatchList().add(movieId);
         userRepo.save(user);
 
-        Response response = Response.builder()
-                .message("Movie added to watchlist")
-                .isSuccessful(true)
-                .build();
-        return ResponseEntity.ok(response);
+        return ResponseUtil.createResponse("Movie added to watchlist", true, HttpStatus.OK);
     }
 
     public ResponseEntity<Response> getUserWatchList(String username, String jwtToken) {
@@ -125,5 +115,21 @@ public class UserService{
                 .isSuccessful(true)
                 .build();
         return ResponseEntity.ok(response);
+    }
+
+    private Pair<User, ResponseEntity<Response>> validateUserAndToken(String jwtToken) {
+        if (!jwtUtil.validateToken(jwtToken)) {
+            return Pair.of(null, ResponseUtil.createResponse("JWT token invalid or expired", false, HttpStatus.UNAUTHORIZED));
+        }
+
+        Claims claims = jwtUtil.extractClaims(jwtToken);
+        String username = claims.getSubject();
+        User user = userRepo.findByUsername(username);
+
+        if (user == null) {
+            return Pair.of(null, ResponseUtil.createResponse("User not found", false, HttpStatus.NOT_FOUND));
+        }
+
+        return Pair.of(user, null);
     }
 }
