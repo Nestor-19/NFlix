@@ -55,12 +55,10 @@ public class UserService{
             User user = userRepo.findByUsername(username);
             if (user != null) {
                 return ResponseUtil.createResponse("JWT token valid", true, HttpStatus.OK);
-            } else {
-                return ResponseUtil.createResponse("User not found", false, HttpStatus.NOT_FOUND);
             }
-        } else {
-            return ResponseUtil.createResponse("JWT token invalid or expired", false, HttpStatus.UNAUTHORIZED);
+                return ResponseUtil.createResponse("User not found", false, HttpStatus.NOT_FOUND);
         }
+            return ResponseUtil.createResponse("JWT token invalid or expired", false, HttpStatus.UNAUTHORIZED);
     }
 
     public ResponseEntity<Response> refreshJwt(String oldJwtToken) {
