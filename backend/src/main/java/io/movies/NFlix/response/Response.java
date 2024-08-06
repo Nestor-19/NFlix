@@ -1,5 +1,6 @@
 package io.movies.NFlix.response;
 
+import io.movies.NFlix.entity.User;
 import lombok.Builder;
 import lombok.Data;
 
@@ -8,6 +9,6 @@ import lombok.Data;
 public class Response {
     private String message;
     private boolean isSuccessful;
-    private String user;
+    private User user;
     private String jwtToken;
 }

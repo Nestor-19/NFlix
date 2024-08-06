@@ -45,4 +45,9 @@ public class UserController {
         String movieId = requestDto.getData().get("movieId");
         return userService.addMovieToWatchList(username, jwtToken, movieId);
     }
+
+    @GetMapping("/{username}/watchList")
+    public ResponseEntity<Response> getUserWatchList(@PathVariable String username, @RequestBody JwtRequestDto jwtRequestDto) {
+        return userService.getUserWatchList(username, jwtRequestDto.getJwtToken());
+    }
 }
