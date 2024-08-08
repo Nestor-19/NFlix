@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Carousel from 'react-material-ui-carousel';
 import { Paper } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCirclePlay } from '@fortawesome/free-solid-svg-icons';
+import { faCirclePlay, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import Button from 'react-bootstrap/Button';
 
 
@@ -37,6 +37,11 @@ const TopBanner = ({movies}) => {
                                             </Link>
                                             <div className='movie-review-button-container'>
                                                 <Button variant="info" onClick={() => reviews(movie.imdbId)}>Reviews</Button>
+                                            </div>
+                                            <div className='watch-list-container'>
+                                                <Button variant="success" className='watch-list-button'>
+                                                    <FontAwesomeIcon icon={faPlusCircle} />
+                                                </Button>
                                             </div>
                                         </div>
                                     </div>
