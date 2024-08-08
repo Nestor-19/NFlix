@@ -82,6 +82,8 @@ public class UserService{
         Movie movie = movieRepo.findByImdbId(movieId).orElse(null);
         if (movie == null) {
             return ResponseUtil.createResponse("Movie not found", false, HttpStatus.NOT_FOUND);
+        } else if (user.getWatchList().contains(movie.getImdbId()))  {
+            return ResponseUtil.createResponse("Movie already exists in watch list", false, HttpStatus.CONFLICT);
         }
 
         user.getWatchList().add(movieId);
