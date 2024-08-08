@@ -19,7 +19,10 @@ const Reviews = () => {
         if (rev.value != '') {
             try {
                 const response = await api.post("/api/v1/reviews", {reviewBody: rev.value, imdbId: movieId, username: currentUser.username});
-                const updatedReviews = [...reviews, {body: rev.value}];
+                const updatedReviews = [
+                    ...reviews,
+                    { body: rev.value, imdbId: movieId, user: { username: currentUser.username } },
+                ];
                 rev.value = "";
                 setReviews(updatedReviews);
             } catch(error) {
