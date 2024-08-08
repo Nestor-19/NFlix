@@ -5,14 +5,29 @@ import { Paper } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlay, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import Button from 'react-bootstrap/Button';
+import api from '../../api/axiosConfig';
+import { useContext } from 'react';
+import { UserContext } from '../../context/UserContext';
 
 
 const TopBanner = ({movies}) => {
   const navigate = useNavigate();
+  const { currentUser } = useContext(UserContext)
+  const token = localStorage.getItem('jwtToken');
 
   const reviews = (movieId) => {
     navigate(`/reviews/${movieId}`);
   }
+
+  const addToWatchList = async (movieId) => {
+    try { 
+        const response = await api.post(`/api/v1/auth/watchList/${movieId}`, {jwtToken: token });
+        console.log(response);
+    } catch (error) {
+        console.log(error);
+    }
+  }
+
   return (
     <div className='carousel-container'>
         <Carousel>
@@ -38,11 +53,14 @@ const TopBanner = ({movies}) => {
                                             <div className='movie-review-button-container'>
                                                 <Button variant="info" onClick={() => reviews(movie.imdbId)}>Reviews</Button>
                                             </div>
-                                            <div className='watch-list-container'>
-                                                <Button variant="success" className='watch-list-button'>
-                                                    <FontAwesomeIcon icon={faPlusCircle} />
-                                                </Button>
-                                            </div>
+                                            {currentUser ? 
+                                                <div className='watch-list-container'>
+                                                    <Button variant="success" className='watch-list-button' onClick={() => addToWatchList(movie.imdbId)}>
+                                                        <FontAwesomeIcon icon={faPlusCircle} />
+                                                    </Button>
+                                                </div>
+                                                : null
+                                            }   
                                         </div>
                                     </div>
                                 </div>
