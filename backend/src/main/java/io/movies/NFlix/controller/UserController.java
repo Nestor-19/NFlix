@@ -44,6 +44,12 @@ public class UserController {
         return userService.addMovieToWatchList(jwtToken, movieId);
     }
 
+    @DeleteMapping("/watchList/{movieId}")
+    public ResponseEntity<Response> removeMovieFromWatchList(@PathVariable String movieId, @RequestBody JwtRequestDto jwtRequestDto){
+        String jwtToken = jwtRequestDto.getJwtToken();
+        return userService.removeMovieFromWatchList(jwtToken, movieId);
+    }
+
     @GetMapping("/watchList")
     public ResponseEntity<Response> getUserWatchList(@RequestParam String jwtToken) {
         return userService.getUserWatchList(jwtToken);

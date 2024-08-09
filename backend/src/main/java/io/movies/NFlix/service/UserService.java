@@ -92,6 +92,26 @@ public class UserService{
         return ResponseUtil.createResponse("Movie added to watchlist", true, HttpStatus.OK);
     }
 
+    public ResponseEntity<Response> removeMovieFromWatchList(String jwtToken, String movieId) {
+        Pair<User, ResponseEntity<Response>> validationResult = validateUserAndToken(jwtToken);
+        User user = validationResult.getLeft();
+        ResponseEntity<Response> errorResponse = validationResult.getRight();
+
+        if (errorResponse != null) {
+            return errorResponse;
+        }
+
+        Movie movie = movieRepo.findByImdbId(movieId).orElse(null);
+        if (movie == null) {
+            return ResponseUtil.createResponse("Movie not found", false, HttpStatus.NOT_FOUND);
+        }
+
+        user.getWatchList().remove(movieId);
+        userRepo.save(user);
+
+        return ResponseUtil.createResponse("Movie removed from watchlist", true, HttpStatus.OK);
+    }
+
     public ResponseEntity<Response> getUserWatchList(String jwtToken) {
         Pair<User, ResponseEntity<Response>> validationResult = validateUserAndToken(jwtToken);
         User user = validationResult.getLeft();
