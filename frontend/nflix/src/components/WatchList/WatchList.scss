@@ -28,10 +28,35 @@
     height: auto;
 }
 
-.title {
+.title-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: 10px;
     font-size: 16px;
     font-weight: bold;
     color: #333;
+}
+
+.title-text {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.minus-button {
+    background-color: darkred;
+    border: none ;
+    display: flex;
+    align-items: center;
     justify-content: center;
+    width: 23px;  
+    height: 23px;
+    border-radius: 50%;  
+    color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+    transition: transform 0.3s ease; 
+    
+    &:hover {
+        transform: scale(1.1);
+    }
 }

@@ -45,8 +45,7 @@ public class UserController {
     }
 
     @DeleteMapping("/watchList/{movieId}")
-    public ResponseEntity<Response> removeMovieFromWatchList(@PathVariable String movieId, @RequestBody JwtRequestDto jwtRequestDto){
-        String jwtToken = jwtRequestDto.getJwtToken();
+    public ResponseEntity<Response> removeMovieFromWatchList(@PathVariable String movieId, @RequestHeader("Authorization") String jwtToken){
         return userService.removeMovieFromWatchList(jwtToken, movieId);
     }
 
