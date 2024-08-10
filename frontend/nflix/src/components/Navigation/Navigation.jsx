@@ -25,7 +25,7 @@ const Navigation = () => {
   return (
     <Navbar bg='dark' variant='dark' expand='lg'>
         <Container fluid>
-            <Navbar.Brand href='/' style={{'color': '#d8b04a', 'font-weight': '700'}}>
+            <Navbar.Brand style={{'color': '#d8b04a', 'font-weight': '700'}}>
                 <FontAwesomeIcon icon={faFilm}/> NFlix
             </Navbar.Brand>
             <Navbar.Toggle aria-controls='navbar-scroll'/>
